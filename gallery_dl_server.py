@@ -49,11 +49,24 @@ def gallery_post():
 
 
 def call_gallery_dl(url):
+    error = 1
+    fpath = None
+    fname = None
+    
     try:
+        print(f'Start downloading!')
+        gallery_dl.config.load()
         download_job = gallery_dl.job.DownloadJob
         downloader = download_job(url)
         downloader.run()
-
+        
+        fpath = downloader.pathfmt.directory
+        fname = downloader.pathfmt.filename
+        if fpath and fname:
+            error = 0
+        
+        #import pdb;pdb.set_trace()
+        
         if args.zip_downloads == 'True':
             download_path = downloader.pathfmt.directory
             zip_directories(download_path)
@@ -110,4 +123,4 @@ def zip_directories(path_to_zip):
 
 if __name__ == '__main__':
 
-    app.run(host=DEFAULT_HOST, port=DEFAULT_PORT, debug=True)
+    app.run(host=DEFAULT_HOST, port=DEFAULT_PORT, debug=True, reloader=True)

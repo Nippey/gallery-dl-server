@@ -2,7 +2,7 @@ FROM python:alpine
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-RUN mkdir -p ~/.config/gallery-dl
+RUN mkdir -p /root/.config/gallery-dl
 
 # Prerequisites to install some packages required for yt-dlp
 RUN apk add gcc g++ make libffi-dev openssl-dev git ffmpeg brotli 
@@ -22,6 +22,6 @@ EXPOSE 8080
 # Folder where the image files will be saved to
 VOLUME ["/usr/src/app/gallery-dl"]
 # Folder where the user can provide a custom config.json and cookie files (NOT gallery-dl.cong)
-VOLUME ["~/.config/gallery-dl"]
+VOLUME ["/root/.config/gallery-dl"]
 
 CMD [ "python3", "./gallery_dl_server.py" ]
